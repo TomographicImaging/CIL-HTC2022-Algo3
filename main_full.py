@@ -124,7 +124,7 @@ def main():
 
     #####################################################
 
-    print("Omega: ", omega, "Alpha: ", alpha, "Ang Start: ", ang_start, "Ang Range: ", ang_range)
+    print("Omega: ", omega, "Alpha: ", alpha, "Beta:", beta, "Ang Start: ", ang_start, "Ang Range: ", ang_range)
     print("Num iterations: ", num_iters, "Segmentation Method: ", segmentation_method)
     print("Lower Bound Mask Type: ", lb_mask_type, "Lower Bound Value: ", lb_val)
     print("Upper Bound Mask Type: ", ub_mask_type, "Upper Bound Value: ", ub_val)
@@ -156,7 +156,6 @@ def main():
         
         # algorithmic parameters
         args = [omega, alpha, beta]
-        
         # Run reconstruction
         data_recon = pdhg_l1tvl1(data_preprocessed, ig, lb, ub, *args, num_iters=num_iters, 
                 update_objective_interval=update_objective_interval, verbose=verbose)
