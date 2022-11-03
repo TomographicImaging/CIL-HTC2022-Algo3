@@ -5,7 +5,7 @@ import glob
 import numpy as np
 # method imports
 import util
-from algo import pdhg_tv
+from algo import pdhg_l1tvl1
 
 def preprocess(data):
     '''Preprocess the data'''
@@ -67,6 +67,7 @@ def main():
     parser.add_argument('difficulty', type=int)
     parser.add_argument('-omega', type=float, help="Omega. If not set, defaults to 90/ang_range")
     parser.add_argument('-alpha', type=float, required=True, help= "Alpha. This is required.")
+    parser.add_argument('-beta', type=float, required=True, help= "Beta. This is required.")
     parser.add_argument('-ang_start', type=int, required=True, help="Starting angle, degrees. This is required.")
     parser.add_argument('-ang_range', type=int, required=True, help="Angular range, degrees. This is required.")
     parser.add_argument('-ub_mask_type', type=int, required=True, choices=[1, 2],  help= "1 basic 0.97 circle. 2 fitted")
@@ -108,6 +109,7 @@ def main():
     num_iters = args.num_iters
     # with this algo we do not change alpha with difficulty level
     alpha = args.alpha
+    beta = args.beta
     update_objective_interval = 100
     verbose = 1
     
@@ -122,7 +124,7 @@ def main():
 
     #####################################################
 
-    print("Omega: ", omega, "Alpha: ", alpha, "Ang Start: ", ang_start, "Ang Range: ", ang_range)
+    print("Omega: ", omega, "Alpha: ", alpha, "Beta:", beta, "Ang Start: ", ang_start, "Ang Range: ", ang_range)
     print("Num iterations: ", num_iters, "Segmentation Method: ", segmentation_method)
     print("Lower Bound Mask Type: ", lb_mask_type, "Lower Bound Value: ", lb_val)
     print("Upper Bound Mask Type: ", ub_mask_type, "Upper Bound Value: ", ub_val)
@@ -153,17 +155,17 @@ def main():
         
         
         # algorithmic parameters
-        args = [omega, alpha]
-        
+        args = [omega, alpha, beta]
+
         # Run reconstruction
-        data_recon = pdhg_tv(data_preprocessed, ig, lb, ub, *args, num_iters=num_iters, 
+        data_recon = pdhg_l1tvl1(data_preprocessed, ig, lb, ub, *args, num_iters=num_iters, 
                 update_objective_interval=update_objective_interval, verbose=verbose)
         
         data_segmented = segment(data_recon, segmentation_method)
 
         util.write_data_to_png(data_segmented, input_file, output_folder)
 
-    print("Omega: ", omega, "Alpha: ", alpha, "Ang Start: ", ang_start, "Ang Range: ", ang_range)
+    print("Omega: ", omega, "Alpha: ", alpha, "Beta:", beta, "Ang Start: ", ang_start, "Ang Range: ", ang_range)
     print("Num iterations: ", num_iters, "Segmentation Method: ", segmentation_method)
     print("Lower Bound Mask Type: ", lb_mask_type, "Lower Bound Value: ", lb_val)
     print("Upper Bound Mask Type: ", ub_mask_type, "Upper Bound Value: ", ub_val)
