@@ -21,7 +21,7 @@ import glob
 import numpy as np
 # method imports
 import util
-from algo import pdhg_tv
+from algo import pdhg_l1tvl1
 
 def preprocess(data):
     '''Preprocess the data'''
@@ -98,7 +98,8 @@ def main():
     # Reconstruction
     num_iters = 2000
     # with this algo we do not change alpha with difficulty level
-    alpha = 0.01
+    alpha = 0.03333333333333333
+    beta = 0.3333333333333333
     update_objective_interval = 100
     verbose = 1
     
@@ -137,10 +138,10 @@ def main():
         
         
         # algorithmic parameters
-        args = [omega, alpha]
+        args = [omega, alpha, beta]
         
         # Run reconstruction
-        data_recon = pdhg_tv(data_preprocessed, ig, lb, ub, *args, num_iters=num_iters, 
+        data_recon = pdhg_l1tvl1(data_preprocessed, ig, lb, ub, *args, num_iters=num_iters, 
                 update_objective_interval=update_objective_interval, verbose=verbose)
         
         data_segmented = segment(data_recon, segmentation_method)
