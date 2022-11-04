@@ -50,12 +50,14 @@ conda env create --file environment.yml
 ```
 
 ## Usage instructions.
-Show few examples.
-
 ```
 conda activate htc-22-cil-algo3
 python main.py path/to/input/files path/to/output/files 3
 ```
+
+FBP on Full Dataset        |  Result of CIL-Algo3 - Score: 0.97689
+:-------------------------:|:-------------------------:
+![](https://github.com/TomographicImaging/CIL-HTC2022-Algo3/blob/main/test_data/htc2022_ta_full_recon_fbp_seg.png)   |  ![](https://github.com/TomographicImaging/CIL-HTC2022-Algo3/blob/main/results/htc2022_ta_sparse_example.png)
 
 
 ## Repository content
