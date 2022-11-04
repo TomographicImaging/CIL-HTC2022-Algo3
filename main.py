@@ -105,8 +105,8 @@ def main():
     # Reconstruction
     num_iters = 2000
     # with this algo we do not change alpha with difficulty level
-    alpha = 0.03333333333333333
-    beta = 0.3333333333333333
+    alpha = 0.03
+    beta = 1.0
     update_objective_interval = 100
     verbose = 1
     
