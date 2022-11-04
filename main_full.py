@@ -189,7 +189,7 @@ def main():
 
         util.write_data_to_png(data_segmented, input_file, output_folder)
 
-    print("Omega: ", omega, "Alpha: ", alpha, "Beta: ", beta, "Ang Start: ", ang_start, "Ang Range: ", ang_range)
+    print("Omega: ", omega, "Alpha: ", alpha, "Beta:", beta, "Ang Start: ", ang_start, "Ang Range: ", ang_range)
     print("Num iterations: ", num_iters, "Segmentation Method: ", segmentation_method)
     print("Lower Bound Mask Type: ", lb_mask_type, "Lower Bound Value: ", lb_val)
     print("Upper Bound Mask Type: ", ub_mask_type, "Upper Bound Value: ", ub_val)
