@@ -39,7 +39,7 @@ The main steps of the algorithms are:
 1. Pre-processing: renormalisation, single material beam hardening correction, zero padding
 2. generation of pixelwise lower and upper bound circular masks (mask is fitted to the provided data)
 3. Regularised iterative reconstruction algorithm using tools from CIL: L1Norm with TV and L1 regularisation
-4. Post-processing: segmentation of the reconstruction with multi-Otsu threshold
+4. Post-processing: segmentation of the reconstruction with multi-Otsu threshold, followed by a morphological closing and opening on the reconstruction
 
 ## Installation instructions
 
