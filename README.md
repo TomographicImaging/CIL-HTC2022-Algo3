@@ -49,16 +49,25 @@ Installation instructions, including any requirements.
 conda env create --file environment.yml
 ```
 
-## Usage instructions.
-```
-conda activate htc-22-cil-algo3
-python main.py path/to/input/files path/to/output/files 3
-```
+## Examples
 
-FBP on Full Dataset        |  Result of CIL-Algo3 - Score: 0.97689
-:-------------------------:|:-------------------------:
-![](https://github.com/TomographicImaging/CIL-HTC2022-Algo3/blob/main/test_data/htc2022_ta_full_recon_fbp_seg.png)   |  ![](https://github.com/TomographicImaging/CIL-HTC2022-Algo3/blob/main/results/htc2022_ta_sparse_example.png)
+Examples of reconstructing the example datasets, where we have limited the angles to 90, 60 and 30 degree ranges. The 'ref' column is the given segmented result from the full dataset.
 
+|   	|  Ref	|  90 	| 60 	| 30 	|
+|----------	|-----	|---	|---	|---	|
+|   **ta**	| ![](https://github.com/TomographicImaging/CIL-HTC2022-Algo1/blob/main/test_data/htc2022_ta_full_recon_fbp_seg.png)	| ![](results/AR90/htc2022_ta_full.png)	|  ![](results/AR60/htc2022_ta_full.png) 	|   ![](results/AR30/htc2022_ta_full.png)	|   
+|   **tb**	|   ![](https://github.com/TomographicImaging/CIL-HTC2022-Algo1/blob/improve_table/data/segmented_references/htc2022_tb_full_recon_fbp_seg.png)	|  ![](results/AR90/htc2022_tb_full.png)	|  ![](results/AR60/htc2022_tb_full.png) 	|   ![](results/AR30/htc2022_tb_full.png)	|   
+|   **tc**	|   ![](https://github.com/TomographicImaging/CIL-HTC2022-Algo1/blob/improve_table/data/segmented_references/htc2022_tc_full_recon_fbp_seg.png)	| ![](results/AR90/htc2022_tc_full.png)	|  ![](results/AR60/htc2022_tc_full.png) 	|   ![](results/AR30/htc2022_tc_full.png)	|   
+|   **td**	|   ![](https://github.com/TomographicImaging/CIL-HTC2022-Algo1/blob/improve_table/data/segmented_references/htc2022_td_full_recon_fbp_seg.png)	| ![](results/AR90/htc2022_td_full.png)	|  ![](results/AR60/htc2022_td_full.png) 	|   ![](results/AR30/htc2022_td_full.png)	|   
+
+Scores for each sample and angle:
+
+|   	|  90 	| 60 	| 30 	|
+|-----	|---	|---	|---	|
+|**ta**	|0.988	|0.977	|0.899|
+|**tb**|0.969	|0.941	|0.816|
+|**tc**	|0.946	|0.880	|0.798|
+|**td**	|0.958	|0.952	|0.924|
 
 ## Repository content
 - utils.py
@@ -70,6 +79,24 @@ FBP on Full Dataset        |  Result of CIL-Algo3 - Score: 0.97689
 - test_data
   - htc2022_ta_full_recon_fbp_seg.png
   - htc2022_ta_sparse_example.mat
+- results
+  - htc2022_ta_sparse_example.png
+  - AR30
+    - htc2022_ta_full.png 
+    - htc2022_tb_full.png
+    - htc2022_tc_full.png
+    - htc2022_td_full.png
+  - AR60
+    - htc2022_ta_full.png 
+    - htc2022_tb_full.png
+    - htc2022_tc_full.png
+    - htc2022_td_full.png
+  - AR90
+    - htc2022_ta_full.png 
+    - htc2022_tb_full.png
+    - htc2022_tc_full.png
+    - htc2022_td_full.png 
+
 
 ## License
 All files in the repository come with the [Apache-v2.0](https://www.apache.org/licenses/LICENSE-2.0) license unless differently specified.
