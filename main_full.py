@@ -1,3 +1,19 @@
+#   Copyright 2022 United Kingdom Research and Innovation
+#   Copyright 2022 Technical University of Denmark
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+# 
+
 # basic imports
 from argparse import ArgumentParser
 import os
@@ -6,6 +22,7 @@ import numpy as np
 # method imports
 import util
 from algo import pdhg_l1tvl1
+from skimage.morphology import binary_closing, binary_opening
 
 def preprocess(data):
     '''Preprocess the data'''
@@ -23,8 +40,14 @@ def segment(data, segment_type):
         ss = util.apply_global_threshold(data)
     elif segment_type == 2:
         ss = util.apply_crazy_threshold(data)
+    # add a convolution with a 3x3 kernel with a cross in it to remove
+    # all the negative zingers
+    bc = binary_closing(ss.array, footprint=None, out=None)
+    # and to remove positive zingers
+    bc2 = binary_opening(bc)
+    ss.fill(bc2)
     return util.flipud_unpack(ss)
- 
+  
 def create_lb_ub(data, ig, ub_mask_type, lb_mask_type, ub_val, lb_val, basic_mask_radius, lb_inner_radius):
     # create default lower bound mask
     lb = ig.allocate(0.0)
@@ -159,6 +182,8 @@ def main():
         # Run reconstruction
         data_recon = pdhg_l1tvl1(data_preprocessed, ig, lb, ub, *args, num_iters=num_iters, 
                 update_objective_interval=update_objective_interval, verbose=verbose)
+        from cil.io import NEXUSDataWriter
+        NEXUSDataWriter(data=data_recon, file_name=os.path.join(output_folder, input_file)).write()
         
         data_segmented = segment(data_recon, segmentation_method)
 

@@ -22,6 +22,7 @@ import numpy as np
 # method imports
 import util
 from algo import pdhg_l1tvl1
+from skimage.morphology import binary_closing, binary_opening
 
 def preprocess(data):
     '''Preprocess the data'''
@@ -39,6 +40,12 @@ def segment(data, segment_type):
         ss = util.apply_global_threshold(data)
     elif segment_type == 2:
         ss = util.apply_crazy_threshold(data)
+    # add a convolution with a 3x3 kernel with a cross in it to remove
+    # all the negative zingers
+    bc = binary_closing(ss.array, footprint=None, out=None)
+    # and to remove positive zingers
+    bc2 = binary_opening(bc)
+    ss.fill(bc2)
     return util.flipud_unpack(ss)
  
 def create_lb_ub(data, ig, ub_mask_type, lb_mask_type, ub_val, lb_val, basic_mask_radius, lb_inner_radius):
